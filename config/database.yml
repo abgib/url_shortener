@@ -17,9 +17,9 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: url_shortener_development
+  database: url_shortener_dev
   pool: 5
-  username: url_shortener
+  username: appacademy
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
