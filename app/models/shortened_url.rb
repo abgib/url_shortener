@@ -1,4 +1,4 @@
-class ShorternedUrl < ActiveRecord::Base
+class ShortenedUrl < ActiveRecord::Base
   validates :short_url, :uniqueness => true, :presence => true
   validates :submitter_id, :presence => true
   validates :long_url, :presence => true
@@ -17,17 +17,8 @@ class ShorternedUrl < ActiveRecord::Base
     ShortenedUrl.new(
       :short_url => short_url,
       :long_url  => long_url,
-      :submitter_id = user.id
+      :submitter_id => user.id
     )
   end
-
-  def save!
-    begin
-      short_url = ShorternedUrl.random_code
-      super
-    rescue ActiveRecord::RecordInvalid
-      retry
-    end
-  end
-
+  
 end
