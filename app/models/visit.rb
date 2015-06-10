@@ -6,7 +6,7 @@ class Visit < ActiveRecord::Base
     Visit.new(
       :user_id => user.id,
       :url_id  => shortened_url.id
-    )
+    ).save!
   end
 
   belongs_to(

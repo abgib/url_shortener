@@ -4,6 +4,7 @@ require 'launchy'
 def login
   print "email: "
   email = gets.chomp
+
   unless user = User.find_by_email(email)
     user = User.new(:email => email)
   end
@@ -11,9 +12,46 @@ def login
   user
 end
 
+def prompt_user(user)
+  puts "What do you want to do?"
+  puts "0. Create a shortened URL"
+  puts "1. Visit a shortened URL"
+
+  begin
+    print "> "
+    option = gets.chomp.to_i
+  end until [0,1].include?(option)
+
+  if option == 0
+    create_url(user)
+  else
+    visit_url(user)
+  end
+end
+
+def create_url(user)
+  puts "What is the url you would like to shorten?"
+  long_url = gets.chomp
+
+  short_url = ShortenedUrl.create_for_user_and_long_url(user, long_url)
+  short_url.save!
+
+  puts short_url.short_url
+end
+
+def visit_url(user)
+  puts "Type the shortened url"
+  short_url = ShortenedUrl.find_by_short_url(gets.chomp)
+
+  visit = Visit.record_visit!(user, short_url)
+
+  Launchy.open(short_url.long_url)
+end
 
 if $PROGRAM_NAME == __FILE__
-
-  login
-
+  user = login
+  
+  while true
+    prompt_user(user)
+  end
 end
