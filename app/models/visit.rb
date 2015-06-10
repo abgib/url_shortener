@@ -8,4 +8,18 @@ class Visit < ActiveRecord::Base
       :url_id  => shortened_url.id
     )
   end
+
+  belongs_to(
+    :visitor,
+    :class_name  => 'User',
+    :foreign_key => :user_id,
+    :primary_key => :id
+  )
+
+  belongs_to(
+    :shortened_url,
+    :class_name  => 'ShortenedUrl',
+    :foreign_key => :url_id,
+    :primary_key => :id
+  )
 end
