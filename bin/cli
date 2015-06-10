@@ -1,0 +1,19 @@
+require 'launchy'
+
+
+def login
+  print "email: "
+  email = gets.chomp
+  unless user = User.find_by_email(email)
+    user = User.new(:email => email)
+  end
+
+  user
+end
+
+
+if $PROGRAM_NAME == __FILE__
+
+  login
+
+end
