@@ -20,5 +20,12 @@ class ShortenedUrl < ActiveRecord::Base
       :submitter_id => user.id
     )
   end
-  
+
+  belongs_to(
+    :submitter,
+    :class_name => 'User',
+    :foreign_key => :submitter_id,
+    :primary_key => :id
+  )
+
 end
