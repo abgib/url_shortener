@@ -37,6 +37,7 @@ class ShortenedUrl < ActiveRecord::Base
 
   has_many(
     :visitors,
+    -> { distinct },
     :through => :visits,
     :source  => :visitor
   )
@@ -46,7 +47,7 @@ class ShortenedUrl < ActiveRecord::Base
   end
 
   def num_uniques
-    self.visits.select(:user_id).distinct.count
+    self.visitors.count
   end
 
   def num_recent_uniques
